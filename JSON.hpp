@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include <exception>
 
 enum ValueType {
 	Array,
@@ -14,13 +15,37 @@ enum ValueType {
 	Null,
 	Uncertain
 };
-
 class Value {
 public:
 	ValueType type = Uncertain;
-	virtual std::string stringify() { return "null"; };
+	virtual std::string stringify() { return "null"; }
 	virtual ~Value() {}
 };
+
+Value* parse(std::string& str);
+Value* parse(std::string&, size_t&);
+
+
+class JSONexception :public std::exception
+{
+	std::vector < std::pair<size_t, std::string>> info;
+public:
+	JSONexception() {}
+	JSONexception(size_t no, std::string str) {
+		info.push_back(std::make_pair(no, str));
+	}
+
+	std::string to_string() {
+		std::string ret;
+		for (auto record : info)
+			ret += std::to_string(record.first) + "\t" + record.second + "\n";
+		return ret;
+	}
+	void push(size_t no, std::string str) {
+		info.push_back(std::make_pair(no, str));
+	}
+};
+
 
 class Array : public Value {
 	std::vector<std::unique_ptr<Value>> elems;
