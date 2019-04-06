@@ -111,13 +111,28 @@ Value* parse_number(std::string & str, size_t & crt) {
 
 	return (istringstream(string(str, lo, crt - lo + 1)) >> x) ? new class::Number(x) : new class::Number(0);
 }
+Value * parse_string(std::string & str, size_t & crt) {
+	++crt;
+	std::string ret;
+	while (crt < str.size()) {
+		if (str[crt] == '"') { ++crt; return new class::String(ret); }
+		else if (str[crt] == '\\') {
+			ret.push_back(str[crt++]);
+			switch (str[crt])
+			{
+			case '"':case '\\':case '/':case 'b':case 'f':case 'n':case 'r':case 't':
+			case 'u':ret.push_back(str[crt++]); break;
+			default: throw JSONexception(crt, "ILLEGAL ESCAPE-CHAR");
+			}
+		}
+		else
+		ret.push_back(str[crt++]);
+	}
+	throw JSONexception(crt, "NO END MARKS '\"'");
+}
 
 /////////////////////////////////////////////////////
 
-Value * parse_string(std::string & str, size_t & crt) {
-	throw JSONexception(crt, "parse_string() NOT IMPLEMENTED YET");
-	return nullptr;
-}
 Value* parse_object(std::string & str, size_t & crt) {
 	throw JSONexception(crt, "parse_object() NOT IMPLEMENTED YET");
 	return nullptr;

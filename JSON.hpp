@@ -54,6 +54,7 @@ public:
 	virtual std::string stringify()override;
 
 	Array(std::initializer_list<Value*>);
+	Value* push(Value*);
 };
 
 class String : public Value {
