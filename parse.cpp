@@ -126,18 +126,41 @@ Value * parse_string(std::string & str, size_t & crt) {
 			}
 		}
 		else
-		ret.push_back(str[crt++]);
+			ret.push_back(str[crt++]);
 	}
 	throw JSONexception(crt, "NO END MARKS '\"'");
 }
+Value* parse_array(std::string & str, size_t & crt) {
+	++crt;
+	class::Array* ret = new class::Array();
+	eat_white(str, crt);
+	if (str[crt] == ']') {
+		++crt; return ret;
+	}
+	while (1) {
+		Value* tmp = nullptr;
+		try {
+			tmp = parse(str, crt);
+		}
+		catch (...) {
+			delete tmp;
+			delete ret;
+			throw;
+		}
 
+		ret->push(tmp);
+		eat_white(str, crt);
+		if (str[crt] == ',') ++crt;
+		else if (str[crt] == ']') {
+			++crt; return ret;
+		}
+		else { delete ret; throw JSONexception(crt, "array() ENDLESS PAIN BRO"); }
+	}
+	return nullptr;
+}
 /////////////////////////////////////////////////////
 
 Value* parse_object(std::string & str, size_t & crt) {
 	throw JSONexception(crt, "parse_object() NOT IMPLEMENTED YET");
-	return nullptr;
-}
-Value* parse_array(std::string & str, size_t & crt) {
-	throw JSONexception(crt, "parse_array() NOT IMPLEMENTED YET");
 	return nullptr;
 }

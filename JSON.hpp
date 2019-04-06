@@ -36,7 +36,8 @@ public:
 	}
 
 	std::string to_string() {
-		std::string ret;
+		std::string ret(info.back().first, '~');
+		ret += "^\n";
 		for (auto record : info)
 			ret += std::to_string(record.first) + "\t" + record.second + "\n";
 		return ret;
@@ -53,6 +54,7 @@ public:
 	ValueType type = ValueType::Array;
 	virtual std::string stringify()override;
 
+	Array() {}
 	Array(std::initializer_list<Value*>);
 	Value* push(Value*);
 };

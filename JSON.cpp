@@ -16,11 +16,12 @@ Array::Array(std::initializer_list<Value*> initlist) {
 		elems.emplace_back(elem);
 }
 
-Value* Array::push(Value* elem) {
+Value* Array::push(Value * elem) {
 	elems.emplace_back(elem);
+	return this;
 }
 
-std::string Object::stringify(){
+std::string Object::stringify() {
 	std::string ret = "{";
 	for (auto& pair : dict) {
 		ret += '"';
