@@ -38,7 +38,8 @@ int main()
 
 
 	parse_many({
-		"true", " null", " false  ", " true1", " null1 ", " false 1 ",
+		//"true", " null", " false  ", " true1", " null1 ", " false 1 ",
+		"123","0.409532765E10","-1.3e+45 "," 567.09"," 0E-3 ","1e-10000",".312","61." 
 		});
 
 #ifdef _WIN32

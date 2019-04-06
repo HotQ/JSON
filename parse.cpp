@@ -1,5 +1,6 @@
 #include "JSON.hpp"
-//Value* parse_root(std::string& str, size_t crt);
+#include <sstream>
+
 Value* parse_true(std::string& str, size_t& crt);
 Value* parse_false(std::string& str, size_t& crt);
 Value* parse_null(std::string& str, size_t& crt);
@@ -9,20 +10,27 @@ Value* parse_object(std::string& str, size_t& crt);
 Value* parse_array(std::string& str, size_t& crt);
 
 #define ISDIGIT(ch) ((ch)>='0' && (ch)<='9')
+#define ISD1TO9(ch) ((ch)>='1' && (ch)<='9')
 
-#include <iostream>
 
-static void ign_white(std::string& str, size_t& crt) {
+
+static void eat_white(std::string& str, size_t& crt) {
 	while (crt < str.size()) {
 		if (str[crt] == ' ' || str[crt] == '\t' || str[crt] == '\r' || str[crt] == '\n' || str[crt] == '\v') ++crt;
 		else break;
 	}
 }
+static void eat_digit(std::string & str, size_t & crt) {
+	while (crt < str.size()) {
+		if (ISDIGIT(str[crt]))++crt;
+		else break;
+	}
+}
+
 Value* parse(std::string & str) {
 	size_t crt = 0;
 	Value* ret = parse(str, crt);
-	ign_white(str, crt);
-	//std::cout << "crt " << crt << std::endl;
+	eat_white(str, crt);
 	if (crt != str.size()) {
 		delete ret;
 		throw JSONexception(crt, "EXTRA NONE-WHITESPACE-CHAR");
@@ -30,7 +38,7 @@ Value* parse(std::string & str) {
 	return ret;
 }
 Value* parse(std::string & str, size_t & crt) {
-	ign_white(str, crt);
+	eat_white(str, crt);
 	if (str.size() <= crt)
 		return nullptr;
 	switch (str[crt])
@@ -73,13 +81,40 @@ Value* parse_null(std::string & str, size_t & crt) {
 	else throw JSONexception(crt, "SHOULD BE \"null\"");
 }
 
+Value* parse_number(std::string & str, size_t & crt) {
+	using namespace std;
+	size_t lo = crt;
+	double  x = 0;
+
+	if (str[crt] == '-')++crt;
+
+	if (str[crt] == '0')++crt;
+	else if (ISD1TO9(str[crt])) {
+		++crt;
+		eat_digit(str, crt);
+	}
+	else throw JSONexception(crt, "SHOULD HAVE DIGITS THERE");
+
+	if (str[crt] == '.') {
+		size_t sublo = ++crt;
+		eat_digit(str, crt);
+		if (sublo == crt)throw JSONexception(crt, "AT LEAST ONE DIGIT AFTER '.'");
+	}
+
+	if (str[crt] == 'e' || str[crt] == 'E') {
+		++crt;
+		if (str[crt] == '+' || str[crt] == '-') {
+			++crt;
+		}
+		eat_digit(str, crt);
+	}
+
+	return (istringstream(string(str, lo, crt - lo + 1)) >> x) ? new class::Number(x) : new class::Number(0);
+}
+
 /////////////////////////////////////////////////////
 
-Value* parse_number(std::string & str, size_t & crt) {
-	throw JSONexception(crt, "parse_number() NOT IMPLEMENTED YET");
-	return nullptr;
-}
-Value* parse_string(std::string & str, size_t & crt) {
+Value * parse_string(std::string & str, size_t & crt) {
 	throw JSONexception(crt, "parse_string() NOT IMPLEMENTED YET");
 	return nullptr;
 }
