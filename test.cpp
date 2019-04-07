@@ -29,9 +29,9 @@ int main()
 		* str2 = new class::String("lhlkj"),
 		* arr1 = new class::Array({ str1, str2 }),
 		* arr2 = new class::Array({ arr1,new class::Boolean(false), new class::Null() }),
-		* obj1 = new class::Object({ make_pair(string("arr2"),arr2) , make_pair("NULL",new class::Null())  , make_pair("Number",new class::Number(-4e3)) });
-	(*static_cast<class::Object*>(obj1))[string("String")] = unique_ptr<Value>(new class::String("asdfrweg"));
-	cout << "================================\n\n\n"
+		* obj1 = new class::Object({ make_pair(new class::String("arr2"),arr2) , make_pair(new class::String("NULL"),new class::Null())  , make_pair(new class::String("Number"),new class::Number(-4e3)) });
+	//(*static_cast<class::Object*>(obj1))[string("String")] = unique_ptr<Value>(new class::String("asdfrweg"));
+	std::cout << "================================\n\n\n"
 		<< obj1->stringify() << endl
 		<< "\n\n\n================================\n";
 	delete obj1;

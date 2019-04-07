@@ -24,21 +24,21 @@ Value* Array::push(Value * elem) {
 std::string Object::stringify() {
 	std::string ret = "{";
 	for (auto& pair : dict) {
-		ret += '"';
-		ret += pair.first;
-		ret += "\":";
-		ret += (pair.second)->stringify();
+		ret += pair.first->stringify();
+		ret += ":";
+		ret += pair.second->stringify();
 		ret += ",";
 	}
 	if (ret.back() == ',') ret.pop_back();
 	ret += '}';
 	return ret;
 }
-std::unique_ptr<Value>& Object::operator[](std::string str) {
-	dict.insert(make_pair(str, std::unique_ptr<Value>()));
-	return dict[str];
+void Object::insert(class::String * strptr, Value * valptr)
+{
+	dict.insert(make_pair(std::unique_ptr<class::String>(strptr), std::unique_ptr<Value>(valptr)));
 }
-Object::Object(std::initializer_list<std::pair<std::string, Value*>> initlist) {
+Object::Object(std::initializer_list<std::pair<class::String*, Value*>>initlist)
+{
 	for (auto elem : initlist)
-		dict[elem.first] = std::unique_ptr<Value>(elem.second);
+		dict.insert(make_pair(std::unique_ptr<class::String>(elem.first), std::unique_ptr<Value>(elem.second)));
 }

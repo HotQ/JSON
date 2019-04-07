@@ -69,13 +69,14 @@ public:
 };
 
 class Object : public Value {
-	std::unordered_map<std::string, std::unique_ptr<Value>> dict;
+	std::unordered_map<std::unique_ptr<class::String>, std::unique_ptr<Value>> dict;
 public:
 	ValueType type = ValueType::Object;
 	virtual std::string stringify()override;
-	std::unique_ptr<Value>& operator[](std::string);
+	// std::unique_ptr<class::String>& operator[](class::String*);
 
-	Object(std::initializer_list<std::pair<std::string, Value*>>);
+	void insert(class::String*, Value*);
+	Object(std::initializer_list<std::pair<class::String*, Value*>>);
 };
 
 class Boolean : public Value {
