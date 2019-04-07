@@ -74,7 +74,7 @@ public:
 	ValueType type = ValueType::Object;
 	virtual std::string stringify()override;
 	// std::unique_ptr<class::String>& operator[](class::String*);
-
+	Object() {}
 	void insert(class::String*, Value*);
 	Object(std::initializer_list<std::pair<class::String*, Value*>>);
 };

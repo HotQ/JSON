@@ -161,6 +161,46 @@ Value* parse_array(std::string & str, size_t & crt) {
 /////////////////////////////////////////////////////
 
 Value* parse_object(std::string & str, size_t & crt) {
-	throw JSONexception(crt, "parse_object() NOT IMPLEMENTED YET");
+	// throw JSONexception(crt, "parse_object() NOT IMPLEMENTED YET");
+	++crt;
+	class::Object* ret = new class::Object();
+	eat_white(str, crt);
+	if (str[crt] == '}') {
+		++crt; return ret;
+	}
+	while (1) {
+		class::String* tmpstr = nullptr;
+		try {
+			tmpstr = static_cast<class::String*>(parse(str, crt));
+		}
+		catch (...) {
+			delete tmpstr;
+			delete ret;
+			throw;
+		}
+		eat_white(str, crt);
+		if (str[crt] == ':') ++crt;
+		else { throw JSONexception(crt, "object() SHOULD BE ':' HERE"); }
+
+		eat_white(str, crt);
+		Value* tmpval = nullptr;
+		try {
+			tmpval = parse(str, crt);
+		}
+		catch (...) {
+			delete tmpval;
+			delete ret;
+			throw;
+		}
+		ret->insert(tmpstr, tmpval);
+		eat_white(str, crt);
+
+		if (str[crt] == ',') ++crt;
+		else if (str[crt] == '}') {
+			++crt; return ret;
+		}
+		else { delete ret; throw JSONexception(crt, "object() ENDLESS PAIN BRO"); }
+	}
+	return nullptr;
 	return nullptr;
 }

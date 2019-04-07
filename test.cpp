@@ -41,7 +41,8 @@ int main()
 		// "true", " null", " false  ", " true1", " null1 ", " false 1 ",
 		// "123","0.409532765E10","-1.3e+45 "," 567.09"," 0E-3 ","1e-10000",".312","61." 
 		// R"("123\n")",R"("l;ziSjdo'\u089")",R"("1"23")",R"("²Ë\"23")",R"("\²Ë\"23")",
-		"[]"," [ ] "," [ 9,] ","[true , null , true]",R"(["²Ë",[-1.3e+5,null]])",R"(["²Ë",[-1.3e+5,null])",
+		// "[]"," [ ] "," [ 9,] ","[true , null , true]",R"(["²Ë",[-1.3e+5,null]])",R"(["²Ë",[-1.3e+5,null])",
+		"{}"," { } ",R"({"key1":1})", R"({"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]})"
 		});
 #ifdef _WIN32
 	_CrtDumpMemoryLeaks();
