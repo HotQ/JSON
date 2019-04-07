@@ -42,7 +42,31 @@ int main()
 		// "123","0.409532765E10","-1.3e+45 "," 567.09"," 0E-3 ","1e-10000",".312","61." 
 		// R"("123\n")",R"("l;ziSjdo'\u089")",R"("1"23")",R"("²Ë\"23")",R"("\²Ë\"23")",
 		// "[]"," [ ] "," [ 9,] ","[true , null , true]",R"(["²Ë",[-1.3e+5,null]])",R"(["²Ë",[-1.3e+5,null])",
-		"{}"," { } ",R"({"key1":1})", R"({"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]})"
+		"{}"," { } ",R"({"key1":1}),"R"({"key1":1,})", R"({"employees": [{ "firstName":"Bill" , "lastName":"Gates" },{ "firstName":"George" , "lastName":"Bush" },{ "firstName":"Thomas" , "lastName":"Carter" }]})",
+			R"(
+			[{
+				"_index": "item",
+				"_type": "items",
+				"_id": "966b0d44-6e1f-4fe6-b971-cf9522d8ec09",
+				"firstname": "Francis",
+				"lastname": "Backer",
+				"age": 3
+			}, {
+				"_index": "item",
+				"_type": "items",
+				"_id": "cb26c226-6a59-4696-8cd0-267bea89fb14",
+				"firstname": "Michelle",
+				"lastname": "Kilmer",
+				"age": 42
+			}, {
+				"_index": "item",
+				"_type": "items",
+				"_id": "9d34885c-9b21-4329-be08-e89e73935d08",
+				"firstname": "Jenna",
+				"lastname": "Karst",
+				"age": 57
+			}]
+			)"
 		});
 #ifdef _WIN32
 	_CrtDumpMemoryLeaks();
