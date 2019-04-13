@@ -25,11 +25,11 @@ int main()
 {
 	using namespace std;
 
-	Value* str1 = new class::String("SDFG"),
-		* str2 = new class::String("lhlkj"),
-		* arr1 = new class::Array({ str1, str2 }),
-		* arr2 = new class::Array({ arr1,new class::Boolean(false), new class::Null() }),
-		* obj1 = new class::Object({ make_pair(new class::String("arr2"),arr2) , make_pair(new class::String("NULL"),new class::Null())  , make_pair(new class::String("Number"),new class::Number(-4e3)) });
+	Value* str1 = new String("SDFG"),
+		* str2 = new String("lhlkj"),
+		* arr1 = new Array({ str1, str2 }),
+		* arr2 = new Array({ arr1,new Boolean(false), new Null() }),
+		* obj1 = new Object({ make_pair(new String("arr2"),arr2) , make_pair(new String("NULL"),new Null())  , make_pair(new String("Number"),new Number(-4e3)) });
 	std::cout << "================================\n\n\n"
 		<< obj1->stringify() << endl
 		<< "\n\n\n================================\n";

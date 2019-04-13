@@ -33,12 +33,12 @@ std::string Object::stringify() {
 	ret += '}';
 	return ret;
 }
-void Object::insert(class::String * strptr, Value * valptr)
+void Object::insert(String * strptr, Value * valptr)
 {
-	dict.insert(make_pair(std::unique_ptr<class::String>(strptr), std::unique_ptr<Value>(valptr)));
+	dict.insert(make_pair(std::unique_ptr<String>(strptr), std::unique_ptr<Value>(valptr)));
 }
-Object::Object(std::initializer_list<std::pair<class::String*, Value*>>initlist)
+Object::Object(std::initializer_list<std::pair<String*, Value*>>initlist)
 {
 	for (auto elem : initlist)
-		dict.insert(make_pair(std::unique_ptr<class::String>(elem.first), std::unique_ptr<Value>(elem.second)));
+		dict.insert(make_pair(std::unique_ptr<String>(elem.first), std::unique_ptr<Value>(elem.second)));
 }

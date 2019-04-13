@@ -60,21 +60,21 @@ Value* parse(std::string & str, size_t & crt) {
 Value* parse_true(std::string & str, size_t & crt) {
 	if (str.size() >= crt + 4 && str[++crt] == 'r' && str[++crt] == 'u' && str[++crt] == 'e') {
 		++crt;
-		return new class::Boolean(true);
+		return new Boolean(true);
 	}
 	else throw JSONexception(crt, "SHOULD BE \"true\"");
 }
 Value* parse_false(std::string & str, size_t & crt) {
 	if (str.size() >= crt + 5 && str[++crt] == 'a' && str[++crt] == 'l' && str[++crt] == 's' && str[++crt] == 'e') {
 		++crt;
-		return new class::Boolean(false);
+		return new Boolean(false);
 	}
 	else throw JSONexception(crt, "SHOULD BE \"false\"");
 }
 Value* parse_null(std::string & str, size_t & crt) {
 	if (str.size() >= crt + 4 && str[++crt] == 'u' && str[++crt] == 'l' && str[++crt] == 'l') {
 		++crt;
-		return new class::Null();
+		return new Null();
 	}
 	else throw JSONexception(crt, "SHOULD BE \"null\"");
 }
@@ -107,13 +107,13 @@ Value* parse_number(std::string & str, size_t & crt) {
 		eat_digit(str, crt);
 	}
 
-	return (istringstream(string(str, lo, crt - lo + 1)) >> x) ? new class::Number(x) : new class::Number(0);
+	return (istringstream(string(str, lo, crt - lo + 1)) >> x) ? new Number(x) : new Number(0);
 }
 Value * parse_string(std::string & str, size_t & crt) {
 	++crt;
 	std::string ret;
 	while (crt < str.size()) {
-		if (str[crt] == '"') { ++crt; return new class::String(ret); }
+		if (str[crt] == '"') { ++crt; return new String(ret); }
 		else if (str[crt] == '\\') {
 			ret.push_back(str[crt++]);
 			switch (str[crt])
@@ -130,7 +130,7 @@ Value * parse_string(std::string & str, size_t & crt) {
 }
 Value* parse_array(std::string & str, size_t & crt) {
 	++crt;
-	class::Array* ret = new class::Array();
+	Array* ret = new Array();
 	eat_white(str, crt);
 	if (str[crt] == ']') {
 		++crt; return ret;
@@ -159,15 +159,15 @@ Value* parse_array(std::string & str, size_t & crt) {
 
 Value* parse_object(std::string & str, size_t & crt) {
 	++crt;
-	class::Object* ret = new class::Object();
+	Object* ret = new Object();
 	eat_white(str, crt);
 	if (str[crt] == '}') {
 		++crt; return ret;
 	}
 	while (1) {
-		class::String* tmpstr = nullptr;
+		String* tmpstr = nullptr;
 		try {
-			tmpstr = static_cast<class::String*>(parse(str, crt));
+			tmpstr = static_cast<String*>(parse(str, crt));
 		}
 		catch (...) {
 			delete tmpstr;
