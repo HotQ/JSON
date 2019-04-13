@@ -13,7 +13,6 @@ Value* parse_array(std::string& str, size_t& crt);
 #define ISD1TO9(ch) ((ch)>='1' && (ch)<='9')
 
 
-
 static void eat_white(std::string& str, size_t& crt) {
 	while (crt < str.size()) {
 		if (str[crt] == ' ' || str[crt] == '\t' || str[crt] == '\r' || str[crt] == '\n' || str[crt] == '\v') ++crt;
@@ -57,7 +56,6 @@ Value* parse(std::string & str, size_t & crt) {
 			throw JSONexception(crt, "CAN'T FIGURE OUT WHAT TYPE THIS JSON IS!");
 		}
 	}
-
 }
 Value* parse_true(std::string & str, size_t & crt) {
 	if (str.size() >= crt + 4 && str[++crt] == 'r' && str[++crt] == 'u' && str[++crt] == 'e') {
@@ -158,10 +156,8 @@ Value* parse_array(std::string & str, size_t & crt) {
 	}
 	return nullptr;
 }
-/////////////////////////////////////////////////////
 
 Value* parse_object(std::string & str, size_t & crt) {
-	// throw JSONexception(crt, "parse_object() NOT IMPLEMENTED YET");
 	++crt;
 	class::Object* ret = new class::Object();
 	eat_white(str, crt);
@@ -201,6 +197,5 @@ Value* parse_object(std::string & str, size_t & crt) {
 		}
 		else { delete ret; throw JSONexception(crt, "object() ENDLESS PAIN BRO"); }
 	}
-	return nullptr;
 	return nullptr;
 }
